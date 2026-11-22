@@ -1,0 +1,877 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080b08">
+  <title>SayHighFriends.com | 21+ Community</title>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --black: #080b08;
+      --panel: #111710;
+      --line: #31412a;
+      --green: #a9f542;
+      --white: #f4f6f1;
+      --muted: #b4c0ae;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--black);
+      color: var(--white);
+      font: 15px/1.5 system-ui, sans-serif;
+    }
+    h1, h2, h3, p, pre { margin: 0; }
+    p + p { margin-top: .7rem; }
+    a { color: var(--green); }
+    button, input, textarea, select { font: inherit; }
+    :focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+
+    .top {
+      display: grid;
+      grid-template-columns: minmax(150px, 1fr) minmax(220px, 500px) minmax(150px, 1fr);
+      gap: 18px;
+      align-items: center;
+      padding: 12px 24px;
+      background: #0d120c;
+      border-bottom: 1px solid var(--line);
+    }
+    .top > :last-child { justify-self: end; }
+    .brand, .wordmark {
+      color: #f0f0ee;
+      font-family: Impact, "Arial Black", sans-serif;
+      font-style: italic;
+      text-transform: uppercase;
+      text-shadow: 2px 3px #000;
+    }
+    .brand { text-decoration: none; font-size: 21px; }
+    .brand span, .wordmark span { color: var(--green); }
+
+    .ad {
+      text-align: center;
+      background: #121b0f;
+      border: 1px dashed #49603a;
+      border-radius: 9px;
+      padding: 12px;
+    }
+    .ad a, .ad small { display: block; }
+    .ad small, .label {
+      color: var(--muted);
+      font: 11px/1.4 monospace;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+    .top .ad { padding: 6px 12px; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 180px minmax(0, 1fr) 220px;
+      gap: 20px;
+      align-items: start;
+      max-width: 1500px;
+      margin: auto;
+      padding: 20px 24px 32px;
+    }
+    #navigation, #placements, .stack { display: grid; gap: 10px; }
+    #main { min-width: 0; }
+    #navigation a {
+      display: block;
+      padding: 8px 10px;
+      text-decoration: none;
+      color: var(--white);
+      border: 1px solid transparent;
+      border-radius: 7px;
+    }
+    #navigation a:hover, #navigation a[aria-current="page"] {
+      background: #1a2813;
+      border-color: var(--line);
+      color: var(--green);
+    }
+
+    .hero, .card, .cover, .tv {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      margin-bottom: 14px;
+    }
+    .card { padding: 16px; background: var(--panel); }
+    .card p { margin-top: 6px; }
+    .muted { color: var(--muted); }
+    .hero {
+      text-align: center;
+      padding: 35px 8px;
+      background:
+        linear-gradient(90deg, #06110655, #060a06b0),
+        url("hero.webp") center / cover,
+        radial-gradient(ellipse at left, #395c20, #0c180b 60%, #050705);
+    }
+    .tagline {
+      color: var(--green);
+      font-size: clamp(15px, 2.3vw, 28px);
+      font-weight: 800;
+      font-style: italic;
+    }
+    .wordmark {
+      font-size: clamp(24px, 4.6vw, 79px);
+      line-height: 1.15;
+      letter-spacing: -.03em;
+    }
+
+    .cover {
+      min-height: 255px;
+      padding: 20px;
+      display: flex;
+      align-items: end;
+    }
+    .fan-cover {
+      background:
+        linear-gradient(0deg, #080b08f2, #080b0826),
+        url("fan-background.webp") center 42% / cover,
+        #1b3215;
+    }
+    .profile-cover {
+      min-height: 350px;
+      background:
+        linear-gradient(0deg, #080b08f5, transparent 60%),
+        url("profile-background.webp") center top / auto 100% no-repeat,
+        radial-gradient(ellipse at center, #28481d, #080b08 70%);
+    }
+
+    .tv {
+      position: relative;
+      height: clamp(230px, 30vw, 360px);
+      overflow: hidden;
+      background: #141b13;
+    }
+    .tv canvas, .tv video, .tv-title { position: absolute; inset: 0; }
+    .tv canvas, .tv video { width: 100%; height: 100%; }
+    .tv video { background: #000; }
+    .tv-title {
+      display: grid;
+      place-content: center;
+      text-align: center;
+      background: radial-gradient(ellipse, #0002, #000b);
+      pointer-events: none;
+    }
+    .tv-title strong {
+      font: italic 900 clamp(39px, 6vw, 86px)/1 Impact, "Arial Black", sans-serif;
+      text-transform: uppercase;
+      text-shadow: 2px 4px #000;
+    }
+    .tv-title span { color: var(--green); margin-top: 10px; }
+    .tv .play { position: absolute; bottom: 12px; right: 12px; }
+
+    .row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .actions { margin-top: 12px; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .btn, button {
+      display: inline-block;
+      padding: 7px 11px;
+      border: 1px solid #465e36;
+      border-radius: 7px;
+      background: #1a2715;
+      color: var(--white);
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .primary { background: var(--green); color: #101709; border-color: var(--green); }
+    button[disabled] { opacity: .65; cursor: not-allowed; }
+    button:hover:not([disabled]), .btn:hover { filter: brightness(1.14); }
+
+    form, label { display: grid; gap: 7px; }
+    form { gap: 12px; }
+    input, select, textarea {
+      min-width: 0;
+      width: 100%;
+      padding: 8px;
+      color: var(--white);
+      background: #090d08;
+      border: 1px solid #465e36;
+      border-radius: 6px;
+    }
+    input[type="checkbox"] { width: auto; }
+    textarea { min-height: 78px; resize: vertical; }
+    img, video { max-width: 100%; }
+    .media { display: block; max-height: 320px; margin-top: 10px; }
+    .avatar {
+      display: grid;
+      place-items: center;
+      width: 53px;
+      height: 53px;
+      border: 1px solid #608049;
+      border-radius: 50%;
+      background: #23391b;
+      color: var(--green);
+      font-size: 26px;
+      font-weight: 800;
+      overflow: hidden;
+    }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .tier { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid var(--line); }
+    .tier strong { color: var(--green); }
+    .price { color: var(--green); font-size: 32px; font-weight: 800; }
+    .thread { max-height: 260px; overflow: auto; }
+    .thread p { padding: 7px 9px; border-radius: 6px; background: #1c2a16; overflow-wrap: anywhere; }
+    pre { white-space: pre-wrap; overflow-wrap: anywhere; padding: 8px; background: #080b08; }
+
+    dialog {
+      width: min(530px, calc(100% - 24px));
+      max-height: 90vh;
+      padding: 18px;
+      border: 1px solid #4f6540;
+      border-radius: 10px;
+      background: var(--panel);
+      color: var(--white);
+    }
+    dialog::backdrop { background: #000b; }
+    .dialog-head { display: flex; justify-content: space-between; gap: 10px; align-items: center; margin-bottom: 14px; }
+    #notice:not(:empty) {
+      position: fixed;
+      right: 12px;
+      bottom: 12px;
+      z-index: 2;
+      max-width: calc(100% - 24px);
+      padding: 10px 13px;
+      border: 1px solid #648944;
+      border-radius: 8px;
+      background: #192713;
+    }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 130px minmax(0, 1fr) 165px; gap: 12px; padding-inline: 12px; }
+    }
+    @media (max-width: 680px) {
+      .top { grid-template-columns: 1fr auto; gap: 8px; padding: 10px 12px; }
+      .top .ad { grid-column: 1 / -1; grid-row: 2; }
+      .top > :last-child { grid-column: 2; grid-row: 1; }
+      .brand { font-size: 17px; }
+      .layout { grid-template-columns: minmax(0, 1fr); }
+      #navigation { display: flex; overflow-x: auto; white-space: nowrap; }
+      #placements { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      #placements > .label { grid-column: 1 / -1; }
+      .grid { grid-template-columns: minmax(0, 1fr); }
+      .hero, .profile-cover { background-position: center; }
+      .wordmark { font-size: clamp(26px, 8.2vw, 54px); }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="top" id="top"></header>
+
+  <div class="layout">
+    <nav id="navigation" aria-label="Site navigation"></nav>
+    <main id="main"></main>
+    <aside id="placements" aria-label="Advertising placements"></aside>
+  </div>
+
+  <dialog id="dialog" aria-labelledby="dialog-title"></dialog>
+  <div id="notice" role="status" aria-live="polite"></div>
+
+  <script>
+    const $ = selector => document.querySelector(selector);
+    const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    }[c]));
+
+    const tiers = [
+      ["0–99,999", 10],
+      ["100,000–199,999", 15],
+      ["200,000–299,999", 30],
+      ["300,000–399,999", 45],
+      ["400,000+", 60]
+    ];
+
+    const people = [
+      { id: "sage", name: "Sage Rivera", age: 29, gender: "Female", miles: 1, bio: "Record collector and night owl." },
+      { id: "milo", name: "Milo Chen", age: 34, gender: "Male", miles: 8, bio: "Always looking for a new album." },
+      { id: "jules", name: "Jules Park", age: 27, gender: "Nonbinary", miles: 24, bio: "Movie nights and late-night chats." }
+    ];
+
+    const rooms = [
+      { id: "green", name: "The Green Room", topic: "General hangout", messages: [] },
+      { id: "night", name: "Late Night Sesh", topic: "After hours", messages: [] },
+      { id: "music", name: "High Fidelity", topic: "Music and culture", messages: [] }
+    ];
+
+    const fans = [
+      { id: "chronic", name: "Chronic Vibes", bio: "Good vibes, great buds.", count: 28750, following: false, posts: [] },
+      { id: "owl", name: "Night Owl Club", bio: "Movies and late-night conversation.", count: 814, following: false, posts: [] }
+    ];
+
+    let me = null;
+    let posts = [];
+    let matches = people;
+    let broadcast = null;
+    let noiseTimer = null;
+    let noticeTimer = null;
+    let camera = null;
+    const inbox = [];
+    const creatives = [];
+    const messages = new Map();
+    const friends = new Set();
+
+    const id = () => Math.random().toString(36).slice(2);
+    const path = () => location.hash.replace(/^#\/?/, "").split("/");
+    const go = route => {
+      const next = "#/" + route;
+      if (location.hash === next) render();
+      else location.hash = next;
+    };
+
+    function link(route, label, primary = false) {
+      return `<a class="btn${primary ? " primary" : ""}" href="#/${esc(route)}">${esc(label)}</a>`;
+    }
+
+    function button(action, label, value = "", primary = false) {
+      return `<button type="button"${primary ? ' class="primary"' : ""} data-action="${esc(action)}" data-value="${esc(value)}">${esc(label)}</button>`;
+    }
+
+    function card(body) {
+      return `<section class="card">${body}</section>`;
+    }
+
+    function field(label, control) {
+      return `<label>${label}${control}</label>`;
+    }
+
+    function form(kind, body, label) {
+      return `<form data-form="${kind}">${body}<button class="primary" type="submit">${esc(label)}</button></form>`;
+    }
+
+    function notice(message) {
+      $("#notice").textContent = message;
+      clearTimeout(noticeTimer);
+      noticeTimer = setTimeout(() => $("#notice").textContent = "", 4200);
+    }
+
+    function modal(title, body) {
+      $("#dialog").innerHTML = `<div class="dialog-head">
+        <h2 id="dialog-title">${esc(title)}</h2>${button("close", "Close")}
+      </div>${body}`;
+      if (!$("#dialog").open) $("#dialog").showModal();
+    }
+
+    function requireMember() {
+      if (me) return true;
+      modal("Join the 21+ community",
+        `<p class="muted">Create a demo profile to try this feature.</p>
+         <div class="actions">${link("account", "Login or sign up 21+", true)}</div>`);
+      return false;
+    }
+
+    function ad(target, slot = "") {
+      return `<div class="ad">
+        ${slot ? `<div class="label">Slot ${esc(slot)}</div>` : ""}
+        <strong>Want to advertise here?</strong>
+        <a href="#/advertise/${esc(target)}"
+           aria-label="${slot ? `Click here to advertise in slot ${esc(slot)}` : "Click here to advertise in the banner"}">Click here</a>
+        <small>Coming soon</small>
+      </div>`;
+    }
+
+    function render() {
+      clearInterval(noiseTimer);
+      const [page, key] = path();
+      const fan = page === "fan" ? fans.find(item => item.id === key) : null;
+
+      $("#top").innerHTML = `
+        <a class="brand" href="#/">Say<span>High</span>Friends.com</a>
+        ${ad("banner")}
+        ${link(me ? "profile/me" : "account", me ? "My profile" : "Login or sign up 21+", true)}`;
+
+      const menu = [
+        ["", "Home"], ["profile/me", "My Profile"], ["buddies", "Find Buddies"],
+        ["messages", "Messages"], ["fans", "Fan Pages"], ["create-fan", "Create a Fan Page"],
+        ["lounges", "Sesh Lounges"], ["sesh", "Online Smoke Sesh"], ["admin", "Admin preview"]
+      ];
+
+      $("#navigation").innerHTML = menu.map(([route, name]) =>
+        `<a href="#/${route}"${path().join("/") === route ? ' aria-current="page"' : ""}>${name}</a>`
+      ).join("");
+
+      $("#placements").innerHTML = `<div class="label">Sponsor placements</div>` +
+        Array.from({ length: fan ? 3 : 4 }, (_, i) => {
+          const slot = i + 1;
+          return ad(fan ? `fan-box/${fan.id}/${slot}` : `box/${slot}`, slot);
+        }).join("");
+
+      const pages = {
+        "": home,
+        account,
+        buddies,
+        profile: () => profile(key),
+        messages: () => directMessages(key),
+        fans: fanDirectory,
+        fan: () => fanPage(fan),
+        "create-fan": createFan,
+        lounges,
+        sesh,
+        advertise,
+        admin
+      };
+
+      $("#main").innerHTML = (pages[page] || (() => card("<h1>Page not found</h1>")))();
+      if (!page && !broadcast) startStatic();
+    }
+
+    function home() {
+      return `
+        <section class="hero">
+          <div class="label">21+ community</div>
+          <p class="tagline">the #1 social media website for stoners</p>
+          <h1 class="wordmark">Say<span>High</span>Friends.com</h1>
+          <p>Connect · Share · Chill · Earn</p>
+        </section>
+
+        <h2>Stoner TV</h2>
+        <section class="tv" aria-label="Stoner TV">
+          ${broadcast
+            ? `<video controls playsinline src="${esc(broadcast.url)}" aria-label="${esc(broadcast.name)}"></video>`
+            : `<canvas id="static" width="200" height="95" aria-hidden="true"></canvas>
+               <div class="tv-title"><strong>Stoner TV</strong><span class="label">Coming soon</span></div>
+               <button class="primary play" type="button" data-action="play" aria-label="Play Stoner TV">Play</button>`}
+        </section>
+
+        ${card(button("clip", "Submit content for consideration to be put on Stoner TV"))}
+        ${card(form("search",
+          field("Find your old smoking buddies", '<input name="q" placeholder="Search by name">'),
+          "Search people"
+        ))}
+        ${lounges()}`;
+    }
+
+    function startStatic() {
+      const canvas = $("#static");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+      const image = ctx.createImageData(canvas.width, canvas.height);
+
+      function paint() {
+        for (let i = 0; i < image.data.length; i += 4) {
+          const n = 35 + Math.random() * 105;
+          image.data[i] = n * 0.9;
+          image.data[i + 1] = n;
+          image.data[i + 2] = n * 0.9;
+          image.data[i + 3] = 255;
+        }
+        ctx.putImageData(image, 0, 0);
+      }
+
+      paint();
+      if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        noiseTimer = setInterval(paint, 125);
+      }
+    }
+
+    function account() {
+      if (me) return card(`<h1>Your demo account</h1>
+        <p>Profile and activity stay in this tab.</p>
+        <div class="row actions">${link("profile/me", "My profile")}${button("signout", "End demo session")}</div>`);
+
+      return card(`<h1>Login or sign up 21+</h1>
+        <p class="muted">Use fictional details. This demo does not send verification codes or create real accounts.</p>
+        <div class="actions">${form("account", `
+          ${field("Demo action", '<select name="mode"><option>Sign up</option><option>Login</option></select>')}
+          ${field("Contact method", '<select name="method"><option>Email address</option><option>Mobile number</option></select>')}
+          ${field("Display name", '<input name="name" maxlength="60" placeholder="Example: Sage">')}
+          ${field("Bio", '<textarea name="bio" maxlength="500"></textarea>')}
+          ${field("Profile photo (optional)", '<input type="file" name="photo" accept="image/*">')}
+          <label class="row"><input type="checkbox" required> I am 21 or older.</label>`,
+          "Open demo profile"
+        )}</div>`);
+    }
+
+    function avatar(person) {
+      return `<div class="avatar" aria-hidden="true">${person.photo
+        ? `<img src="${esc(person.photo)}" alt="">`
+        : esc(person.name[0].toUpperCase())}</div>`;
+    }
+
+    function profile(key) {
+      const own = key === "me";
+      const person = own ? me : people.find(p => p.id === key);
+
+      if (!person) return card(`<h1>My Profile</h1><p>Start a demo profile to continue.</p>
+        <div class="actions">${link("account", "Login or sign up 21+", true)}</div>`);
+
+      const samplePost = { name: "Sage Rivera", text: "What’s everyone listening to tonight?" };
+      const feed = own
+        ? [...posts, ...(friends.has("sage") ? [samplePost] : [])]
+        : key === "sage" ? [samplePost] : [];
+
+      return `
+        <section class="cover profile-cover">
+          <div>
+            <div class="row">${avatar(person)}<h1>${esc(person.name)}</h1></div>
+            <p>${esc(person.bio || "No bio yet.")}</p>
+            <div class="row actions">
+              ${link("", "Home")}${link("sesh", "Online Smoke Sesh")}${link("lounges", "Sesh Lounges")}
+              ${own ? "" : button("friend", friends.has(key) ? "Remove demo friend" : "Add demo friend", key)
+                + link(`messages/${key}`, "Message")}
+            </div>
+          </div>
+        </section>
+        ${own ? card(form("post", `
+          ${field("What’s on your mind?", '<textarea name="text" maxlength="1200"></textarea>')}
+          ${field("Photo or MP4 (optional)", '<input type="file" name="media" accept="image/*,video/mp4">')}`,
+          "Publish demo post"
+        )) : ""}
+        <h2>Newsfeed</h2>
+        ${feed.length ? feed.map(post => card(`
+          <h3>${esc(post.name)}</h3><p>${esc(post.text)}</p>
+          ${post.media ? (post.video
+            ? `<video class="media" controls playsinline src="${esc(post.media)}"></video>`
+            : `<img class="media" src="${esc(post.media)}" alt="Photo shared by ${esc(post.name)}">`) : ""}
+        `)).join("") : card('<p class="muted">No posts yet.</p>')}`;
+    }
+
+    function buddies() {
+      return card(`<h1>Find Buddies</h1><p class="muted">These are sample members and distances.</p>`) +
+        card(form("search", field("Find your old smoking buddies",
+          '<input name="q" placeholder="Search by name">'), "Search people")) +
+        card(form("discover", `<h2>Find new smoking buddies</h2>
+          <div class="grid">
+            ${field("Distance in miles", '<input type="number" name="miles" min="1" placeholder="Blank means anywhere">')}
+            ${field("Gender", '<select name="gender" aria-label="Gender"><option value="">Any gender</option><option>Female</option><option>Male</option><option>Nonbinary</option></select>')}
+            ${field("Minimum age", '<input type="number" name="min" min="21" value="21">')}
+            ${field("Maximum age", '<input type="number" name="max" min="21" placeholder="No maximum">')}
+          </div>`, "Find new buddies")) +
+        `<div class="grid">${matches.length ? matches.map(p => card(`
+          <div class="row">${avatar(p)}<h3>${esc(p.name)}</h3></div>
+          <p class="muted">${p.age} · ${esc(p.gender)} · ${p.miles} mi</p>
+          <div class="actions">${link(`profile/${p.id}`, "View profile")}</div>
+        `)).join("") : "<p>No sample members match your search.</p>"}</div>`;
+    }
+
+    function directMessages(key) {
+      const person = people.find(p => p.id === key);
+      const header = card(`<h1>Messages</h1><p class="muted">Demo messages stay in this tab and aren’t delivered to anyone.</p>`);
+      if (!me) return header + link("account", "Login or sign up 21+", true);
+      if (!person) return header + card(`<div class="row">${people.map(p =>
+        link(`messages/${p.id}`, p.name)).join("")}</div>`);
+      const thread = messages.get(key) || [];
+      return header + card(`<h2>${esc(person.name)}</h2>
+        <div class="thread">${thread.map(msg => `<p>${esc(msg)}</p>`).join("")}</div>
+        ${form("message", `<input type="hidden" name="key" value="${esc(key)}">
+          ${field("Your message", '<input name="text" required maxlength="500">')}`, "Send demo message")}`);
+    }
+
+    function lounges() {
+      return card(`<h2>Sesh Lounges</h2><p>Drop in, pick a topic, and hang out.</p>
+        <div class="row actions">${button("create-room", "Create a Lounge", "", true)}</div>`) +
+        `<div class="grid">${rooms.map(room => card(`<h3>${esc(room.name)}</h3>
+          <p class="muted">${esc(room.topic)}</p>
+          <div class="actions">${button("room", "Open lounge", room.id)}</div>`)).join("")}</div>`;
+    }
+
+    function showRoom(key) {
+      const room = rooms.find(item => item.id === key);
+      if (!room) return;
+      modal(room.name, `<p class="muted">${esc(room.topic)} · Local demo chat</p>
+        <div class="thread">${room.messages.map(msg => `<p>${esc(msg)}</p>`).join("")}</div>
+        ${form("room-message", `<input type="hidden" name="key" value="${esc(key)}">
+          ${field("Message", '<input name="text" required maxlength="500">')}`, "Send")}`);
+    }
+
+    function sesh() {
+      return card(`<h1>Online Smoke Sesh</h1>
+        <p>Can’t leave home? Don’t want to? Online smoke sesh!</p>
+        <p class="muted">The demo can show your camera locally if your browser allows it. It cannot connect a call.</p>
+        <div class="row actions">${button("camera", "Test my camera", "", true)}${link("messages", "Messages")}</div>`);
+    }
+
+    function fanDirectory() {
+      return card(`<h1>Fan Pages</h1><p>Anyone can browse. Demo members can subscribe and create pages.</p>
+        <div class="actions">${link("create-fan", "Earn with SayHighFriends... Create a Fan Page!", true)}</div>`) +
+        `<div class="grid">${fans.map(fan => `<article class="cover fan-cover"><div>
+          <h2>${esc(fan.name)}</h2><p>${fan.count.toLocaleString()} subscribers</p>
+          <div class="actions">${link(`fan/${fan.id}`, "Visit Fan Page")}</div>
+        </div></article>`).join("")}</div>`;
+    }
+
+    function fanPage(fan) {
+      if (!fan) return card(`<h1>Fan page not found</h1>${link("fans", "Browse Fan Pages")}`);
+      return `<section class="cover fan-cover"><div>
+        <div class="label">Public fan page · ${fan.count.toLocaleString()} subscribers</div>
+        <h1>${esc(fan.name)}</h1><p>${esc(fan.bio)}</p>
+        <div class="row actions">
+          ${button("subscribe", fan.following ? "Subscribed · Unsubscribe" : "Subscribe", fan.id, true)}
+          ${link("fans", "All Fan Pages")}
+        </div>
+      </div></section>
+      ${ad(`fan-banner/${fan.id}`)}
+      <h2 class="actions">Page posts</h2>
+      ${fan.owner && fan.owner === me?.id ? card(form("fan-post", `
+        <input name="key" type="hidden" value="${esc(fan.id)}">
+        ${field("Write a fan page post", '<textarea name="text" required maxlength="1000"></textarea>')}`,
+        "Publish page post"
+      )) : ""}
+      ${fan.posts.length ? fan.posts.map(text => card(`<p>${esc(text)}</p>`)).join("") : card("<p>No page posts yet.</p>")}`;
+    }
+
+    function createFan() {
+      return card(`<h1>Create a Fan Page</h1><p>Earn with SayHighFriends when creator payouts launch.</p>
+        <div class="actions"><h2>Creator share of page ad revenue</h2>
+        ${tiers.map(([range, percent]) => `<div class="tier"><span>${range} subscribers</span><strong>${percent}%</strong></div>`).join("")}
+        </div><p>The platform receives the remaining share and sitewide ad revenue.</p>`) +
+        card(`<h2>Bank onboarding</h2><p class="muted">A live page’s payouts will require secure onboarding with an approved processor. Do not enter bank details here.</p>
+          <button type="button" disabled>Connect bank account · Coming soon</button>`) +
+        card(form("fan-create", `
+          ${field("Fan page name", '<input name="name" maxlength="65" required>')}
+          ${field("About your page", '<textarea name="bio" maxlength="500"></textarea>')}`,
+          "Create demo Fan Page"));
+    }
+
+    function advertise() {
+      const [, type, key, slot] = path();
+      const fan = type?.startsWith("fan-") ? fans.find(item => item.id === key) : null;
+      const selected = fan
+        ? `${fan.name}: ${type === "fan-box" ? `side box ${slot || ""}` : "banner"}`
+        : type === "box" ? `Sitewide side box ${key || ""}` : "Sitewide banner";
+
+      return card("<h1>Advertise here</h1><p>Sitewide placements are for the homepage and user profiles.</p>") +
+        `<div class="grid">
+          ${card('<h3>Sitewide banner</h3><div class="price">$1,200</div><p>Commitment + $1.50 per click</p>')}
+          ${card('<h3>Sitewide side box</h3><div class="price">$300</div><p>Commitment + $0.75 per click</p>')}
+        </div>` +
+        card(`<h2>${esc(selected)}</h2>
+          <p>${fan ? "Fan-page-specific pricing has not been set." : "Checkout will be hosted by an approved payment processor."}</p>
+          <p class="muted">Coming soon. No payments, click billing, payouts, or live ad placement in this demo.</p>
+          <div class="row actions"><button type="button" disabled>Pay by credit or debit card</button>
+          ${button("creative", "Try the ad-code demo", selected)}</div>`) +
+        card(`<h2>Want to reach more people?</h2>
+          <div class="actions">${link("fans", "Check out fan pages and advertise there!")}</div>`);
+    }
+
+    function admin() {
+      return card(`<h1>Admin preview</h1><p class="muted">This is not a secured owner account. Changes only affect this tab.</p>
+        <p>Payment processor and owner payouts: not connected.</p>`) +
+        card(`<h2>Stoner TV submission inbox</h2>
+          <p>${broadcast ? `Now selected: ${esc(broadcast.name)}` : "No video selected."}</p>
+          <div class="row actions">${button("clip", "Add demo MP4")}
+          ${broadcast ? button("clear-video", "Clear broadcast") : ""}</div>
+          ${inbox.map(clip => card(`<h3>${esc(clip.name)}</h3>
+            <video class="media" controls playsinline src="${esc(clip.url)}"></video>
+            <div class="actions">${button("select-video", "Select for Stoner TV", clip.id, true)}</div>`)).join("")}`) +
+        card(`<h2>Ad creative review inbox</h2><p class="muted">Submitted code is shown as text only. It never runs.</p>
+          ${creatives.map(ad => card(`<h3>${esc(ad.name)}</h3><p>${esc(ad.placement)}</p><pre>${esc(ad.code)}</pre>`)).join("")}`);
+    }
+
+    document.addEventListener("click", async event => {
+      const control = event.target.closest("[data-action]");
+      if (!control) return;
+      const { action, value } = control.dataset;
+
+      switch (action) {
+        case "close":
+          $("#dialog").close();
+          break;
+        case "play":
+          notice("No video is scheduled yet. Stoner TV is coming soon.");
+          break;
+        case "signout":
+          me = null;
+          posts = [];
+          messages.clear();
+          friends.clear();
+          for (const fan of fans) {
+            if (fan.following) fan.count--;
+            fan.following = false;
+          }
+          render();
+          break;
+        case "friend":
+          if (requireMember()) {
+            if (!friends.delete(value)) friends.add(value);
+            render();
+          }
+          break;
+        case "subscribe": {
+          const fan = fans.find(item => item.id === value);
+          if (!fan || !requireMember()) break;
+          fan.following = !fan.following;
+          fan.count += fan.following ? 1 : -1;
+          render();
+          break;
+        }
+        case "create-room":
+          if (requireMember()) modal("Create a Lounge", form("room-new", `
+            ${field("Lounge name", '<input name="name" required maxlength="45">')}
+            ${field("Topic", '<input name="topic" required maxlength="45">')}`, "Open Lounge"));
+          break;
+        case "room":
+          if (requireMember()) showRoom(value);
+          break;
+        case "clip":
+          modal("Submit to Stoner TV", form("clip", `
+            <p class="muted">Choose an MP4 up to 50 MB. It stays in this tab and goes to the demo inbox.</p>
+            ${field("Choose MP4", '<input type="file" name="video" accept=".mp4,video/mp4" required>')}
+            ${field("Video title (optional)", '<input name="name" maxlength="100">')}`, "Send to demo inbox"));
+          break;
+        case "select-video":
+          broadcast = inbox.find(clip => clip.id === value) || null;
+          render();
+          notice("Return Home to play the selected clip.");
+          break;
+        case "clear-video":
+          broadcast = null;
+          render();
+          break;
+        case "creative":
+          modal("Try ad-code submission", form("creative", `
+            <input type="hidden" name="placement" value="${esc(value)}">
+            ${field("Creative name", '<input name="name" required maxlength="100">')}
+            ${field("Sample ad code", '<textarea name="code" required maxlength="5000"></textarea>')}`,
+            "Send sample for review"));
+          break;
+        case "camera": {
+          modal("Local camera test", `<video id="camera" autoplay playsinline muted></video>
+            <p id="camera-status">Waiting for camera permission…</p>`);
+          const video = $("#camera");
+          const status = $("#camera-status");
+          try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+            if (!video.isConnected || !$("#dialog").open) {
+              stream.getTracks().forEach(track => track.stop());
+              break;
+            }
+            camera = stream;
+            video.srcObject = stream;
+            status.textContent = "Local preview only. Close this window to stop the camera.";
+          } catch {
+            status.textContent = "Camera access is unavailable or was not granted.";
+          }
+          break;
+        }
+      }
+    });
+
+    document.addEventListener("submit", event => {
+      const form = event.target;
+      if (!form.dataset.form) return;
+      event.preventDefault();
+
+      const fd = new FormData(form);
+      const text = key => String(fd.get(key) ?? "").trim();
+      const name = text("name");
+      const key = text("key");
+      const body = text("text");
+
+      switch (form.dataset.form) {
+        case "account": {
+          if (!name && text("mode") !== "Login") return notice("Enter a demo display name.");
+          const photo = fd.get("photo");
+          if (photo?.size && (!photo.type.startsWith("image/") || photo.size > 10 * 1024 * 1024)) {
+            return notice("Choose an image under 10 MB.");
+          }
+          me = { id: id(), name: name || "Demo Member", bio: text("bio"),
+            photo: photo?.size ? URL.createObjectURL(photo) : "" };
+          go("profile/me");
+          break;
+        }
+        case "search":
+          matches = people.filter(p => p.name.toLowerCase().includes(text("q").toLowerCase()));
+          go("buddies");
+          break;
+        case "discover": {
+          const max = Number(text("max") || Infinity);
+          const min = Number(text("min") || 21);
+          if (min > max) return notice("Maximum age must be at least the minimum age.");
+          const miles = Number(text("miles") || Infinity);
+          const gender = text("gender");
+          matches = people.filter(p => p.miles <= miles && p.age >= min && p.age <= max
+            && (!gender || gender === p.gender));
+          render();
+          break;
+        }
+        case "post": {
+          if (!me) return;
+          const media = fd.get("media");
+          const video = media?.type === "video/mp4";
+          if (!body && !media?.size) return notice("Add a status, photo, or video.");
+          if (media?.size && ((!video && !media.type.startsWith("image/")) || media.size > 50 * 1024 * 1024)) {
+            return notice("Choose an image or MP4 under 50 MB.");
+          }
+          posts.unshift({ name: me.name, text: body, video,
+            media: media?.size ? URL.createObjectURL(media) : "" });
+          render();
+          break;
+        }
+        case "message":
+          if (me && body && people.some(p => p.id === key)) {
+            messages.set(key, [...(messages.get(key) || []), body]);
+            render();
+          }
+          break;
+        case "fan-create": {
+          if (!name || !requireMember()) return;
+          const fan = { id: id(), name, bio: text("bio"), count: 0,
+            following: false, posts: [], owner: me.id };
+          fans.push(fan);
+          go(`fan/${fan.id}`);
+          break;
+        }
+        case "fan-post": {
+          const fan = fans.find(item => item.id === key);
+          if (!fan || !me || fan.owner !== me.id || !body) return;
+          fan.posts.unshift(body);
+          render();
+          break;
+        }
+        case "room-new": {
+          const topic = text("topic");
+          if (!me || !name || !topic) return notice("Enter a lounge name and topic.");
+          const room = { id: id(), name, topic, messages: [] };
+          rooms.push(room);
+          render();
+          showRoom(room.id);
+          break;
+        }
+        case "room-message": {
+          const room = rooms.find(item => item.id === key);
+          if (me && room && body) {
+            room.messages.push(body);
+            showRoom(key);
+          }
+          break;
+        }
+        case "clip": {
+          const video = fd.get("video");
+          if (!video?.size || !/\.mp4$/i.test(video.name) || video.size > 50 * 1024 * 1024) {
+            return notice("Choose an MP4 up to 50 MB.");
+          }
+          inbox.unshift({ id: id(), name: name || video.name, url: URL.createObjectURL(video) });
+          $("#dialog").close();
+          if (path()[0] === "admin") render();
+          notice("MP4 added to the demo Admin inbox.");
+          break;
+        }
+        case "creative":
+          if (!name || !text("code")) return notice("Enter a name and sample code.");
+          creatives.unshift({ name, code: text("code"), placement: text("placement") });
+          $("#dialog").close();
+          notice("Sample creative added to the demo Admin inbox.");
+          break;
+      }
+    });
+
+    $("#dialog").addEventListener("close", () => {
+      if (camera) camera.getTracks().forEach(track => track.stop());
+      camera = null;
+    });
+
+    window.addEventListener("hashchange", () => {
+      if ($("#dialog").open) $("#dialog").close();
+      render();
+      window.scrollTo(0, 0);
+    });
+
+    render();
+  </script>
+</body>
+</html>
